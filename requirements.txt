@@ -1,0 +1,8 @@
+requests
+scapy
+colorama
+termcolor
+tabulate
+rich
+sphinx
+sphinx_rtd_theme
