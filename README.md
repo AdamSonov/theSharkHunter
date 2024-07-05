@@ -3,7 +3,7 @@
 the shark hunter is a powerful and easy-to-use tool designed to simplify and enhance your workflow.
 
 [![License: EPL-2.0](https://img.shields.io/badge/License-EPL%202.0-blue.svg)](https://opensource.org/licenses/EPL-2.0)
-[![Documentation Status](https://readthedocs.org/projects/awesomeproject/badge/?version=latest)](https://awesomeproject.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/awesomeproject/badge/?version=latest)](thesharkhunter.rtfd.io)
 
 ![AwesomeProject Banner](/images/banner.png)
 
