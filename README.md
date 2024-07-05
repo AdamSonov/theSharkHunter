@@ -32,7 +32,7 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
 - wireshark + tshark (optional)
 
 ### Steps
-### Windows
+**Windows**
 1. Clone the repository:
     ```bash
     git clone https://github.com/username/the-Shark-Hunter.git
