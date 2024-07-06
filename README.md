@@ -32,7 +32,6 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
 - wireshark + tshark (optional)
 
 ### Steps
-**Windows**
 1. Clone the repository:
     ```bash
     git clone https://github.com/username/the-Shark-Hunter.git
@@ -47,16 +46,37 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
     ```
 4. Edit the **config.py** and put your VirusTotal **Api_key**.
 ## Usage
-1. Run the main application (h-shark.py) as Administrator :
-    ```python
-    python h-shark.py
+### Windows
+1. Run **Command line(cmd)** as **Administrator**.
+2. Execute the Shark Hunter:
+    ```bash
+    python h-shark.py --help
     ```
-2. Follow the on-screen instructions to utilize the features of the-shark-hunter.
+3. Follow the on-screen instructions to utilize the features of the-shark-hunter.
+### Linux
+1. Give the permission to **the Shark Hunter** script(h-shark.py) Using **Terminal**:
 
+ ```bash
+ chmod+x h-shark.py
+ ```
+2. Execute the Shark Hunter:
+    ```bash
+    ./h-shark.py --help
+    ```
+3. Follow the on-screen instructions to utilize the features of the-shark-hunter.
 ### Example
 ```bash
 python h-shark.py -r trickbot.pcap --scan
 ```
+**Screenshot 1**
+![AwesomeProject Banner](/images/theSharkHunter.png)
+**Screenshot2**
+![AwesomeProject Banner](/images/theSharkHunter3.png)
+**Screenshot3**
+![AwesomeProject Banner](/images/theSharkHunter4.png)
+**Screenshot4**
+![AwesomeProject Banner](/images/theSharkHunter5.png)
+
 # Contributing
 
 ### Contributing to the Shark Hunter
