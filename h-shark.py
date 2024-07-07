@@ -42,6 +42,13 @@ banner = """
 """
 
 
+def set_terminal_colors():
+    # Set text color to green and background color to black
+    os.system('echo -e "\e[32;40m"')
+
+    # Reset colors when exiting the terminal
+    os.system("trap 'echo -e \"\e[0m\"' EXIT")
+
 
 def get_os_type():
     if sys.platform.startswith('win'):
@@ -54,10 +61,13 @@ def get_os_type():
         return "Unknown"
 
 
-if get_os_type() == "Windows":
-    os.system("color 2")
-elif get_os_type() == "Linux" or get_os_type() == "macOS":
-    os.system("urxvt -bg black -fg green")
+if platform.system() == "Windows":
+    os.system("color 02")
+elif platform.system() == "Linux" or get_os_type() == "macOS":
+    set_terminal_colors()
+
+
+
 
 
 print(colored(banner,"white"))
@@ -177,9 +187,18 @@ def run_Hash_VirusTotal_Scan(target,api_Key):
     return result
     
 def Is_Target_Live(target):
-    # Using subprocess to execute the ping command
+    # Determine the operating system
+    system = platform.system()
+    
+    # Set the ping command based on the OS
+    if system == "Windows":
+        command = ['ping', '-n', '1', target]
+    else:  # For Linux and macOS
+        command = ['ping', '-c', '1', target]
+    
     try:
-        output = subprocess.check_output(['ping', '-c', '1', target])
+        # Using subprocess to execute the ping command
+        output = subprocess.check_output(command, stderr=subprocess.STDOUT)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -373,6 +392,8 @@ if __name__ == "__main__":
     try:
         while True:
             sharkHunter()
+            # Reset colors to default before exiting
+            os.system('echo -e "\e[0m"')
             exit()
     except KeyboardInterrupt:
         print("Script Is Stoped")
