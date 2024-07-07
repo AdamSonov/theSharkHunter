@@ -1,10 +1,8 @@
 #!/bin/python
+
 import io
-
-
 import os
 import sys
-import platform
 import argparse
 import json
 from colorama import init
@@ -19,16 +17,20 @@ from rich.table import Table
 from rich.console import Console
 from rich.syntax import Syntax
 from tabulate import tabulate
-#my library
 import main
+
+##############################
+#theSharkHunter libraries
 from checkInternet import *
 from extractDFP import *
 from virTotal import *
 from unixTime import *
-
 from config import *
 from reassemble import *
 from checkValidDomain import *
+######################"########
+
+import platform
 
 init()
 banner = """
@@ -197,8 +199,8 @@ def Is_Target_Live(target):
         command = ['ping', '-c', '1', target]
     
     try:
-        # Using subprocess to execute the ping command
-        output = subprocess.check_output(command, stderr=subprocess.STDOUT)
+        stderr_option = subprocess.PIPE if platform.system() == 'Windows' else subprocess.DEVNULL
+        output = subprocess.check_output(command, stderr=stderr_option)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -238,76 +240,79 @@ def retData(targets,type,virusTotal_api_Key):
     suspecious_hash = False
     list_suspecious_Hash = []
     print(colored(" [Running]","white")+colored(" "+type+" Scan Is Running Please Wait ...\n","light_grey"))
-    for target in targets:
-        data_to_table = []
-        if(type ==  "DNS"):
-            try:
-                result_dns = run_DNS_VirusTotal_Scan(target,virusTotal_api_Key)
-                result = result_dns
-            except:
-                print(colored("[-] Failed to scan this Target "+target,"red"))
-        elif(type == "IPs"):
-            try:
-                result_ips = run_IPS_VirusTotal_Scan(target,virusTotal_api_Key)
-                result = result_ips
-            except:
-                print(colored("[-] Failed to scan this Target "+target,"red"))
-        elif(type =="HASH"):
-            result_hash = run_Hash_VirusTotal_Scan(target,virusTotal_api_Key)
-            result = result_hash
+    try:
+        for target in targets:
+            data_to_table = []
+            if(type ==  "DNS"):
+                try:
+                    result_dns = run_DNS_VirusTotal_Scan(target,virusTotal_api_Key)
+                    result = result_dns
+                except:
+                    print(colored("[-] Failed to scan this Target "+target,"red"))
+            elif(type == "IPs"):
+                try:
+                    result_ips = run_IPS_VirusTotal_Scan(target,virusTotal_api_Key)
+                    result = result_ips
+                except:
+                    print(colored("[-] Failed to scan this Target "+target,"red"))
+            elif(type =="HASH"):
+                result_hash = run_Hash_VirusTotal_Scan(target,virusTotal_api_Key)
+                result = result_hash
+                
+            if("data" in result.keys()):
+                utime = UnixTime(result["data"]["attributes"]["last_analysis_date"])
+                utime2date = utime.retDate()
+                if(int(result["data"]["attributes"]["last_analysis_stats"]["malicious"]) > 0):
+                    if type == "HASH":
+                        suspecious_hash = True
+                        list_suspecious_Hash.append(target)
+                    print(colored(" [WARNING] "+target,"light_red"))
+                    print(colored("   [LINK] https://www.virustotal.com/gui/domain/"+target,"light_yellow"))
+                    print(colored("   [*] (Suspecious "+type+") ,Threats Found : "+str(result["data"]["attributes"]["last_analysis_stats"]["malicious"]),"red"))
+                    print(colored("   [*] Total Votes : {harmless : "+str(result["data"]["attributes"]["total_votes"]["harmless"])+"} , {malicious : "+str(result["data"]["attributes"]["total_votes"]["malicious"])+"}","light_yellow"))
+                    if("crowdsourced_context" in result["data"]["attributes"].keys()):
+                       print(colored("   [*] Crowd Sourced Context :\n","light_yellow"))
+                       print_pretty_json(result["data"]["attributes"]["crowdsourced_context"])
+                       print("\n")
+                    print(colored("   [*] Last Analysis Date : "+str(utime2date),"light_grey"))
+
+                else:
+                    print(colored(" [SAFE] ","light_green")+colored(target,"light_cyan"))
+
+
             
-        if("data" in result.keys()):
-            utime = UnixTime(result["data"]["attributes"]["last_analysis_date"])
-            utime2date = utime.retDate()
-            if(int(result["data"]["attributes"]["last_analysis_stats"]["malicious"]) > 0):
-                if type == "HASH":
-                    suspecious_hash = True
-                    list_suspecious_Hash.append(target)
-                print(colored(" [WARNING] "+target,"light_red"))
-                print(colored("   [LINK] https://www.virustotal.com/gui/domain/"+target,"light_yellow"))
-                print(colored("   [*] (Suspecious "+type+") ,Threats Found : "+str(result["data"]["attributes"]["last_analysis_stats"]["malicious"]),"red"))
-                print(colored("   [*] Total Votes : {harmless : "+str(result["data"]["attributes"]["total_votes"]["harmless"])+"} , {malicious : "+str(result["data"]["attributes"]["total_votes"]["malicious"])+"}","light_yellow"))
-                if("crowdsourced_context" in result["data"]["attributes"].keys()):
-                   print(colored("   [*] Crowd Sourced Context :\n","light_yellow"))
-                   print_pretty_json(result["data"]["attributes"]["crowdsourced_context"])
-                   print("\n")
-                print(colored("   [*] Last Analysis Date : "+str(utime2date),"light_grey"))
-
-            else:
-                print(colored(" [SAFE] ","light_green")+colored(target,"light_cyan"))
-
-
+            if("data" in result.keys() and type == "IPs"):
+                utime = UnixTime(result["data"]["attributes"]["last_analysis_date"])
+                utime2date = utime.retDate()
+                data_to_table.append(target)
+                data_to_table.append(result["data"]["attributes"]["last_analysis_stats"]["malicious"])
+                data_to_table.append(result["data"]["attributes"].get("country","none"))
+                data_to_table.append(str(result["data"]["attributes"].get("asn","none")))
+                data_to_table.append(result["data"]["attributes"].get("as_owner","none"))
+                data_to_table.append(result["data"]["attributes"].get("network","none"))
+                data_to_table.append(str(utime2date))
+                result_vt_table.append(data_to_table)
+                #
+                table = Table(title="IPs Scan Result",style="cyan")
+                table.add_column("IP_address", justify="right", style="cyan", no_wrap=True)
+                table.add_column("Threat", justify="right", style="magenta", no_wrap=True)
+                table.add_column("country", justify="right", style="green")
+                table.add_column("asn", justify="right", style="green")
+                table.add_column("asn_owner", justify="right", style="green")
+                table.add_column("network", justify="right", style="green")
+                table.add_column("last_analysis_date", style="white")
+                
+        if(type =="HASH" and suspecious_hash):
+            return suspecious_hash, list_suspecious_Hash
         
-        if("data" in result.keys() and type == "IPs"):
-            utime = UnixTime(result["data"]["attributes"]["last_analysis_date"])
-            utime2date = utime.retDate()
-            data_to_table.append(target)
-            data_to_table.append(result["data"]["attributes"]["last_analysis_stats"]["malicious"])
-            data_to_table.append(result["data"]["attributes"].get("country","none"))
-            data_to_table.append(str(result["data"]["attributes"].get("asn","none")))
-            data_to_table.append(result["data"]["attributes"].get("as_owner","none"))
-            data_to_table.append(result["data"]["attributes"].get("network","none"))
-            data_to_table.append(str(utime2date))
-            result_vt_table.append(data_to_table)
-            #
-            table = Table(title="IPs Scan Result",style="cyan")
-            table.add_column("IP_address", justify="right", style="cyan", no_wrap=True)
-            table.add_column("Threat", justify="right", style="magenta", no_wrap=True)
-            table.add_column("country", justify="right", style="green")
-            table.add_column("asn", justify="right", style="green")
-            table.add_column("asn_owner", justify="right", style="green")
-            table.add_column("network", justify="right", style="green")
-            table.add_column("last_analysis_date", style="white")
-            
-    if(type =="HASH" and suspecious_hash):
-        return suspecious_hash, list_suspecious_Hash
-    
-    if(type == "IPs"):   
-        for row in result_vt_table: 
-            table.add_row(str(row[0]), str(row[1]), row[2],str(row[3]),row[4],row[5],row[6])
-        console = Console()
-        console.print(table)
-
+        if(type == "IPs"):   
+            for row in result_vt_table: 
+                table.add_row(str(row[0]), str(row[1]), row[2],str(row[3]),row[4],row[5],row[6])
+            console = Console()
+            console.print(table)
+    except:
+        print(colored(" [WARNING] ","yellow"),colored("Please Check Your VirusTotal Api_Keys!","light_yellow"))
+        exit()
 
     
 def sharkHunter():
@@ -392,8 +397,9 @@ if __name__ == "__main__":
     try:
         while True:
             sharkHunter()
-            # Reset colors to default before exiting
-            os.system('echo -e "\e[0m"')
+            if platform.system() == "Linux":
+                # Reset colors to default before exiting
+                os.system('echo -e "\e[0m"')
             exit()
     except KeyboardInterrupt:
         print("Script Is Stoped")
