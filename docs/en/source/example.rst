@@ -1,9 +1,20 @@
 Example
 -------
 
+Windows:
+~~~~~~~~
+
 .. code-block:: bash
 
-  ./h-shark.py -r trickbot.pcap --scan
+  python h-shark.py -r trickbot.pcap --scan
+
+
+Linux:
+~~~~~~
+
+.. code-block:: bash
+
+  sudo ./h-shark.py -r trickbot.pcap --scan
 
 Result
 ~~~~~~
