@@ -44,14 +44,6 @@ banner = """
 """
 
 
-def set_terminal_colors():
-    # Set text color to green and background color to black
-    os.system('echo -e "\e[32;40m"')
-
-    # Reset colors when exiting the terminal
-    os.system("trap 'echo -e \"\e[0m\"' EXIT")
-
-
 def get_os_type():
     if sys.platform.startswith('win'):
         return "Windows"
@@ -65,11 +57,6 @@ def get_os_type():
 
 if platform.system() == "Windows":
     os.system("color 02")
-elif platform.system() == "Linux" or get_os_type() == "macOS":
-    set_terminal_colors()
-
-
-
 
 
 print(colored(banner,"white"))
@@ -248,13 +235,16 @@ def retData(targets,type,virusTotal_api_Key):
                     result_dns = run_DNS_VirusTotal_Scan(target,virusTotal_api_Key)
                     result = result_dns
                 except:
-                    print(colored("[-] Failed to scan this Target "+target,"red"))
+                    print(colored(" [-] Failed to scan this Target "+target,"red"))
+                    print(colored("     [!] Please Make sure That your Connection is ON !!!","red"))
+                    
             elif(type == "IPs"):
                 try:
                     result_ips = run_IPS_VirusTotal_Scan(target,virusTotal_api_Key)
                     result = result_ips
                 except:
                     print(colored("[-] Failed to scan this Target "+target,"red"))
+                    print(colored("     [!] Please Make sure That your Connection is ON !!!","red"))
             elif(type =="HASH"):
                 result_hash = run_Hash_VirusTotal_Scan(target,virusTotal_api_Key)
                 result = result_hash
@@ -311,7 +301,7 @@ def retData(targets,type,virusTotal_api_Key):
             console = Console()
             console.print(table)
     except:
-        print(colored(" [WARNING] ","yellow"),colored("Please Check Your VirusTotal Api_Keys!","light_yellow"))
+        print(colored(" [WARNING] ","yellow"),colored("Please Make sure that you're putting the Correct VirusTotal Api_key in conf.py!","light_yellow"))
         exit()
 
     
@@ -397,9 +387,6 @@ if __name__ == "__main__":
     try:
         while True:
             sharkHunter()
-            if platform.system() == "Linux":
-                # Reset colors to default before exiting
-                os.system('echo -e "\e[0m"')
             exit()
     except KeyboardInterrupt:
         print("Script Is Stoped")
