@@ -14,14 +14,14 @@ Windows
 Linux
 ~~~~~
 
-1. Give the permission to **the Shark Hunter script(h-shark.py)** Using **Terminal**:
+1. Change mode and add execute permissions to **the Shark Hunter**:
 
 .. code-block:: bash
 
   chmod+x h-shark.py 
 
-2. Execute the Shark Hunter:
+2. Execute the Shark Hunter with **superuser**:
 
 .. code-block:: bash
 
-  ./h-shark.py -r pcapfile --scan 
+  sudo ./h-shark.py -r pcapfile --scan 
