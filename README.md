@@ -54,13 +54,13 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
     ```
 3. Follow the on-screen instructions to utilize the features of the-shark-hunter.
 ### Linux
-1. Change mode and add execute permissions to **the Shark Hunter** script(h-shark.py):
+1. Change mode and add execute permissions to **the Shark Hunter**:
  
      ```bash
      chmod+x h-shark.py
      ```
 
-2. Execute the Shark Hunter with superuser:
+2. Execute the Shark Hunter with **superuser**:
    
     ```bash
     sudo ./h-shark.py --help
@@ -68,6 +68,11 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
     
 4. Follow the on-screen instructions to utilize the features of the-shark-hunter.
 ### Example
+**Windows**
+```bash
+Python h-shark.py -r trickbot.pcap --scan
+```
+**Linux**
 ```bash
 sudo ./h-shark.py -r trickbot.pcap --scan
 ```
