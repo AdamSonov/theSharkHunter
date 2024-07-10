@@ -40,7 +40,7 @@ banner = """
 
                        By @Rafik_Hadjal (The Shark Hunter v1.0)
                                  join me in Telegram
-                                 t.me/butterfly
+                                 t.me/Raf0x90
 """
 
 
