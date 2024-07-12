@@ -21,24 +21,18 @@ class HttpPcap:
             dport = packet[TCP].dport
             seq = packet[TCP].seq
             payload = packet[Raw].load
-
-            # Filter packets from specified ports
             if sport not in {80, 81, 82, 83, 8080, 8081, 8082, 8880, 7000, 8090, 8181} and dport not in {80, 81, 82, 83, 8080, 8081, 8082, 8880, 7000, 8090, 8181}:
                 return
 
-            # Create a unique identifier for each TCP stream
             stream_id = (ip_src, ip_dst, sport, dport)
 
             if stream_id not in self.tcp_streams:
                 self.tcp_streams[stream_id] = {}
-
-            # Add the payload to the corresponding TCP stream
             self.tcp_streams[stream_id][seq] = payload
 
     def reassemble_streams(self):
         reassembled_streams = {}
         for stream_id, segments in self.tcp_streams.items():
-            # Sort the segments by sequence number
             sorted_segments = sorted(segments.items())
             reassembled_payload = b''.join(payload for _, payload in sorted_segments)
             reassembled_streams[stream_id] = reassembled_payload
@@ -60,16 +54,13 @@ class HttpPcap:
                 self.add_packet(packet)
                 
             reassembled_streams = self.reassemble_streams()
-             # Print the reassembled TCP streams without the HTTP response headers
             for stream_id, data in reassembled_streams.items():
                 print(f"Stream {stream_id} has {len(data)} bytes")
-                # Decode and separate headers from the payload
                 try:
                     data_str = data.decode('utf-8', errors='replace')
-                    # Find the end of the headers
                     header_end = data_str.find('\r\n\r\n')
                     if header_end != -1:
-                        body = data[header_end + 4:]  # Skip past the header in bytes
+                        body = data[header_end + 4:]
                         print(body.decode('utf-8', errors='replace'))
 
                 except UnicodeDecodeError as e:
@@ -81,18 +72,13 @@ class HttpPcap:
                 self.add_packet(packet)
                 
             reassembled_streams = self.reassemble_streams()
-             # Print the reassembled TCP streams without the HTTP response headers
             for stream_id, data in reassembled_streams.items():
-            
-                # Decode and separate headers from the payload
+
                 try:
                     data_str = data.decode('utf-8', errors='replace')
-                    # Find the end of the headers
                     header_end = data_str.find('\r\n\r\n')
                     if header_end != -1:
-                        body = data[header_end + 4:]  # Skip past the header in bytes
-                        #body_str = body.decode('utf-8', errors='replace')
-                        
+                        body = data[header_end + 4:]
                         if(body):
                             
                             self.ret_list.append(self.md5Hasher.calculate_file_hash(body))                
@@ -106,16 +92,15 @@ class HttpPcap:
                 self.add_packet(packet)
                 
             reassembled_streams = self.reassemble_streams()
-             # Print the reassembled TCP streams without the HTTP response headers
+
             for stream_id, data in reassembled_streams.items():
                 print(f"Stream {stream_id} has {len(data)} bytes")
-                # Decode and separate headers from the payload
+
                 try:
                     data_str = data.decode('utf-8', errors='replace')
-                    # Find the end of the headers
                     header_end = data_str.find('\r\n\r\n')
                     if header_end != -1:
-                        body = data[header_end + 4:]  # Skip past the header in bytes
+                        body = data[header_end + 4:]
                         if body:
                             self.extractData2File(body)
 
@@ -128,18 +113,13 @@ class HttpPcap:
             self.add_packet(packet)
                 
         reassembled_streams = self.reassemble_streams()
-         # Print the reassembled TCP streams without the HTTP response headers
         for stream_id, data in reassembled_streams.items():
-        
-            # Decode and separate headers from the payload
+
             try:
                 data_str = data.decode('utf-8', errors='replace')
-                # Find the end of the headers
                 header_end = data_str.find('\r\n\r\n')
                 if header_end != -1:
-                    body = data[header_end + 4:]  # Skip past the header in bytes
-                    #body_str = body.decode('utf-8', errors='replace')
-                    
+                    body = data[header_end + 4:]
                     if(body):
                         contentHash = self.md5Hasher.calculate_file_hash(body)
                         if contentHash == hash:

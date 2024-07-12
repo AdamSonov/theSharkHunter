@@ -1,5 +1,4 @@
 #!/bin/python
-
 import io
 import os
 import sys
@@ -69,15 +68,8 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-r' ,'--read')#*
 parser.add_argument('--extract-ips',action='store_true')#*
 parser.add_argument('--extract-dns',action='store_true')#*
-parser.add_argument('--extract-obj-http')
-#parser.add_argument('--extract-obj-smb')
-#parser.add_argument('--extract-obj-tftp')
-#parser.add_argument('--scan-object')
-#parser.add_argument('--scan-file')
 parser.add_argument('-s','--scan',action='store_true')
-parser.add_argument('-o', '--output')
-#parser.add_argument('-v', '--verbose',action='store_true')
-#parser.add_argument('--whois',action='store_true')
+
 args = parser.parse_args()
 
 conn_status = Connection("8.8.8.8",53)
@@ -98,40 +90,24 @@ else:
 
 
 def print_pretty_json(json_data):
-    """
-    Pretty-print JSON data with colors using the rich library.
-
-    Parameters:
-    json_data (str or dict): The JSON data to be pretty-printed. Can be a JSON string or a Python dictionary.
-    """
-    # If the input is a JSON string, parse it into a Python dictionary
+   
     if isinstance(json_data, str):
         data = json.loads(json_data)
     else:
         data = json_data
-
-    # Convert the Python dictionary to a formatted JSON string
     formatted_json = json.dumps(data, indent=2)
 
-    # Create a console instance
     console = Console()
 
-    # Create a Syntax object with JSON syntax highlighting, without line numbers
-    json_syntax = Syntax(formatted_json, "json", theme="monokai", line_numbers=False)
 
-    # Print the formatted JSON with syntax highlighting
+    json_syntax = Syntax(formatted_json, "json", theme="monokai", line_numbers=False)
     console.print(json_syntax)
 
 
     
 def print_indented_table(data, indent=4):
-    # Create the table
     table = AsciiTable(data)
-    
-    # Generate the table with left padding (indentation)
     table_string = '\n'.join((' ' * indent + line) for line in table.table.split('\n'))
-    
-    # Print the table
     print(colored("\n"+table_string,"white"))   
     
 def extIP(extractor,output = False):
@@ -176,13 +152,10 @@ def run_Hash_VirusTotal_Scan(target,api_Key):
     return result
     
 def Is_Target_Live(target):
-    # Determine the operating system
-    system = platform.system()
-    
-    # Set the ping command based on the OS
+    system = platform.system()    
     if system == "Windows":
         command = ['ping', '-n', '1', target]
-    else:  # For Linux and macOS
+    else:  
         command = ['ping', '-c', '1', target]
     
     try:
@@ -195,9 +168,6 @@ def Is_Target_Live(target):
 
 
 def is_ip_live(ip, timeout=1):
-    """
-    Function to check if an IP address is live by sending an ICMP echo request.
-    """
     try:
         packet = IP(dst=ip)/ICMP()
         start_time = time.time()
@@ -357,7 +327,11 @@ def sharkHunter():
 
 
         print("\n","#","-"*60)
-        retData(listIPs,"IPs",virusTotal_api_Key)
+        listPublicIP = []
+        for ip in listIPs:
+            if not is_private_ip(ip):
+                listPublicIP.append(ip)
+        retData(listPublicIP,"IPs",virusTotal_api_Key)
        
         
         instance = HttpPcap(args.read)
@@ -374,7 +348,6 @@ def sharkHunter():
             if suspecious_hash:
                 answer = input("Do you want to Extract the Suspecious HTTP Objects Files?(yes/no): ")
                 if answer.lower() =="yes" or answer.lower() == "y":
-                    #write code in reassemble to extract a speific hash
                     for suspecious in list_suspecious_Hash:
                         instance.extFilebyHash(suspecious)
         else:
