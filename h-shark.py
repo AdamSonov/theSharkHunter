@@ -69,7 +69,7 @@ parser.add_argument('-r' ,'--read')#*
 parser.add_argument('--extract-ips',action='store_true')#*
 parser.add_argument('--extract-dns',action='store_true')#*
 parser.add_argument('-s','--scan',action='store_true')
-
+parser.add_argument('-o', '--output')
 args = parser.parse_args()
 
 conn_status = Connection("8.8.8.8",53)
