@@ -160,7 +160,7 @@ def Is_Target_Live(target):
     
     try:
         stderr_option = subprocess.PIPE if platform.system() == 'Windows' else subprocess.DEVNULL
-        output = subprocess.check_output(command, stderr=stderr_option)
+        command_reponse = subprocess.check_output(command, stderr=stderr_option)
         return True
     except subprocess.CalledProcessError:
         return False
