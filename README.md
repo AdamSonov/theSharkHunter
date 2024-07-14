@@ -60,7 +60,7 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
      chmod+x h-shark.py
      ```
 
-2. Execute the Shark Hunter with **superuser**:
+2. Execute the Shark Hunter with **superuser** or With Opening the Terminal as **Root**:
    
     ```bash
     sudo ./h-shark.py --help
