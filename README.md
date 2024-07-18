@@ -155,4 +155,7 @@ Thank you for your contributions!
 This project is licensed under the Eclipse Public License 2.0 - see the LICENSE file for details.
 
 ## Contact
-For any questions or suggestions, please contact us at rafiklg47@gmail.com.
+For any questions or suggestions, please contact us at Gmail or Telegram.
+[![Gmail Badge](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:rafiklg47@gmail.com)
+
+[![Telegram Badge](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Raf0x90)
