@@ -33,7 +33,8 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
 - wireshark + tshark (optional)
 
 ## Tested on
-- Windows 10, 11
+- Windows 10
+- Windows 11
 - Kali linux
 - Linux
 
