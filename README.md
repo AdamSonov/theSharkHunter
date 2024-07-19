@@ -88,7 +88,7 @@ sudo ./h-shark.py -r trickbot.pcap --scan
 ![AwesomeProject Banner](/images/theSharkHunter5.png)
 
 # Video Tutorial
-[![Watch the video](images/thum.png)](https://www.dailymotion.com/embed/video/x92heam?autoplay=1)
+[![Watch the video](images/thumbnail.png)](https://www.dailymotion.com/embed/video/x92heam?autoplay=1)
 
 
 # Contributing
