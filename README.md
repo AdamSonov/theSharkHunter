@@ -12,7 +12,7 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
 2. [Features](#features)
 3. [Installation](#installation)
 4. [Usage](#usage)
-5. [Video](#video tutorial)
+5. [Tutorial](#Video Tutorial)
 6. [Contributing](#contributing)
 7. [License](#license)
 8. [Contact](#contact)
