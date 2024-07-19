@@ -12,7 +12,7 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
 2. [Features](#features)
 3. [Installation](#installation)
 4. [Usage](#usage)
-5. [Tutorial](#Video_Tutorial)
+5. [Tutorial](#tutorial)
 6. [Contributing](#contributing)
 7. [License](#license)
 8. [Contact](#contact)
@@ -89,6 +89,7 @@ sudo ./h-shark.py -r trickbot.pcap --scan
 ![AwesomeProject Banner](/images/theSharkHunter5.png)
 
 # Video Tutorial
+## tutorial
 [![Watch the video](images/thumbnail.png)](https://www.dailymotion.com/embed/video/x92heam?autoplay=1)
 
 
