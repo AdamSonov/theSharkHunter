@@ -32,6 +32,11 @@ the shark hunter is a powerful and easy-to-use tool designed to simplify and enh
 - Npcap
 - wireshark + tshark (optional)
 
+## Tested on
+- Windows 10, 11
+- Kali linux
+- Linux
+
 ### Steps
 1. Clone the repository:
     ```bash
