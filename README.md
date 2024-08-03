@@ -171,5 +171,5 @@ For any questions or suggestions, please contact us at Gmail or Telegram.
 [![Gmail Badge](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:rafiklg47@gmail.com)
 [![Telegram Badge](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Raf0x90)
 
-## Sponsor
+## Sponsor this project
 <a href="https://www.buymeacoffee.com/raf0x90" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
