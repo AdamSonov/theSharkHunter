@@ -173,3 +173,6 @@ For any questions or suggestions, please contact us at Gmail or Telegram.
 
 ## Sponsor this project
 <a href="https://www.buymeacoffee.com/raf0x90" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href="https://ko-fi.com/raf0x90" target="_blank">
+    <img src="https://cdn.ko-fi.com/cdn/kofi5.png?v=2" alt="Buy Me a Coffee" height="41" width="174">
+</a>
